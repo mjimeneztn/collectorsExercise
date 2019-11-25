@@ -55,6 +55,7 @@ namespace Collectors.Controllers
             var viewModel = new CollectibleCreateViewModel()
             {
                 Collections = await _context.Collections.Where(c => c.UserId == user.Id).ToListAsync()
+
             };
             return View(viewModel);
         }
@@ -68,6 +69,8 @@ namespace Collectors.Controllers
         {
             if (ModelState.IsValid)
             {
+                DateTime currentDate = DateTime.Now;
+                viewModel.Collectible.CollectedDate = currentDate;
                 _context.Add(viewModel.Collectible);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
